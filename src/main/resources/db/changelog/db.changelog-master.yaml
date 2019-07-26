@@ -1,0 +1,9 @@
+databaseChangeLog:
+
+  # includeAll do nothing when run from jar or maven int tests. See also: https://liquibase.jira.com/browse/CORE-2863
+
+  # ============= RELEASE 1.0.0 ======================
+
+  #base
+  - include: { relativeToChangelogFile: true, file: v_1_0_0/001_initial_schema.sql }
+#  - include: { relativeToChangelogFile: true, file: v_1_0_0/002_initial_data.sql }
