@@ -4,9 +4,9 @@ create table users (
     id              bigint          not null constraint users_pk primary key,
     login           varchar(256)    not null,
     name            varchar(256)    not null,
+    password        varchar         not null,
     role            varchar(256)    not null,
-    email           varchar(256),
-    deleted_at      timestamp
+    email           varchar(256)
 );
 
 -- Тренеры
