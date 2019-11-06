@@ -1,9 +1,11 @@
 package com.zaborostroj.competitions.dto
 
-data class UserDto(
-    val id: Long,
-    val login: String,
-    val name: String,
-    val role: String,
-    val email: String
+import org.springframework.security.core.GrantedAuthority
+
+class JwtResponse(
+    var accessToken: String?,
+    var username: String?,
+    val authorities: Collection<GrantedAuthority>
 )
+
+class ResponseMessage(var message: String?)
