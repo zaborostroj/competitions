@@ -48,13 +48,13 @@
                             ref="recaptcha"
                             size="invisible"
                             :sitekey="sitekey"
-                            @verify="onCapthcaVerified"
+                            @verify="onCaptchaVerified"
                             @expired="onCaptchaExpired"
                     />
                     <div class="mt-2"></div>
                 </div>
 
-                <b-button v-on:click="validateCaptcha" variant="primary">Register</b-button>
+                <b-button v-on:click="register" variant="primary">Register</b-button>
 
             </b-card>
         </div>
@@ -62,8 +62,9 @@
 </template>
 
 <script>
-    import {AXIOS} from './http-common'
+    import {AXIOS} from './http-commons'
     import VueRecaptcha from 'vue-recaptcha'
+
     export default {
         name: 'SignUp',
         components: { VueRecaptcha },
@@ -118,14 +119,16 @@
                     };
                     AXIOS.post('/auth/signup', newUser)
                         .then(response => {
-                            console.log(response);
+                            // console.log(response);
+                            this.$data.response = response;
                             this.successAlert();
                         }, error => {
                             this.$data.alertMessage = (error.response.data.message.length < 150) ? error.response.data.message : 'Request error. Please, report this error website owners'
                             this.showAlert();
                         })
                         .catch(error => {
-                            console.log(error);
+                            // console.log(error);
+                            this.$data.error = error;
                             this.$data.alertMessage = 'Request error. Please, report this error website owners';
                             this.showAlert();
                         });
@@ -145,61 +148,6 @@
                 this.password = '';
                 this.confirmpassword = '';
                 this.successfullyRegistered = true;
-            },
-            validateCaptcha() {
-                this.$refs.recaptcha.execute()
-            },
-            onCapthcaVerified(recaptchaToken) {
-                if (this.$data.username === '' || this.$data.username == null) {
-                    this.$data.alertMessage = 'Please, fill "Username" field';
-                    this.showAlert();
-                } else if (this.$data.firstname === '' || this.$data.firstname == null) {
-                    this.$data.alertMessage = 'Please, fill "First name" field';
-                    this.showAlert();
-                } else if (this.$data.lastname === '' || this.$data.lastname == null) {
-                    this.$data.alertMessage = 'Please, fill "Last name" field';
-                    this.showAlert();
-                } else if (this.$data.email === '' || this.$data.email == null) {
-                    this.$data.alertMessage = 'Please, fill "Email" field';
-                    this.showAlert();
-                } else if (!this.$data.email.includes('@')) {
-                    this.$data.alertMessage = 'Email is incorrect';
-                    this.showAlert();
-                } else if (this.$data.password === '' || this.$data.password == null) {
-                    this.$data.alertMessage = 'Please, fill "Password" field';
-                    this.showAlert();
-                } else if (this.$data.confirmpassword === '' || this.$data.confirmpassword == null) {
-                    this.$data.alertMessage = 'Please, confirm password';
-                    this.showAlert();
-                } else if (this.$data.confirmpassword !== this.$data.password) {
-                    this.$data.alertMessage = 'Passwords are not match';
-                    this.showAlert();
-                } else {
-                    var newUser = {
-                        'username': this.$data.username,
-                        'firstName': this.$data.firstname,
-                        'lastName': this.$data.lastname,
-                        'email': this.$data.email,
-                        'password': this.$data.password,
-                        'recapctha_token': recaptchaToken
-                    };
-                    AXIOS.post('/auth/signup', newUser)
-                        .then(response => {
-                            console.log(response);
-                            this.successAlert();
-                        }, error => {
-                            this.$data.alertMessage = error.response.data.message;
-                            this.showAlert();
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            this.$data.alertMessage = 'Request error. Please, report this error website owners';
-                            this.showAlert();
-                        });
-                }
-            },
-            onCaptchaExpired() {
-                this.$refs.recaptcha.reset()
             }
         }
     }

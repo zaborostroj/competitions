@@ -32,3 +32,7 @@ build/
 
 ### Frontend ###
 /frontend/node_modules
+
+### Backend ###
+/backend/src/main/resources/public
+/backend/src/main/resources/templates

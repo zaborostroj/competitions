@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 
 Vue.use(Vuex);
 
@@ -12,18 +12,10 @@ const state = {
 
 const getters = {
     isAuthenticated: state => {
-        if (state.token != null && state.token != '') {
-            return true;
-        } else {
-            return false;
-        }
+        return state.token != null && state.token != '';
     },
     isAdmin: state => {
-        if (state.role === 'admin') {
-            return true;
-        } else {
-            return false;
-        }
+        return state.role === 'admin';
     },
     getUsername: state => {
         return state.username;
@@ -42,8 +34,9 @@ const mutations = {
         localStorage.setItem('user-name', user.name);
         localStorage.setItem('user-authorities', user.roles);
         state.token = user.token;
-        state.username = user.username;
+        state.username = user.name;
         state.authorities = user.roles;
+
         var isUser = false;
         var isAdmin = false;
         for (var i = 0; i < user.roles.length; i++) {
@@ -76,7 +69,7 @@ const mutations = {
 
 const actions = {
     login: (context, user) => {
-        context.commit('auth_login', user)
+        context.commit('auth_login', user);
     },
     logout: (context) => {
         context.commit('auth_logout');

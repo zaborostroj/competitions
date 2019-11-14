@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import {AXIOS} from './http-common'
+    import {AXIOS} from './http-commons'
     export default {
         name: 'SignIn',
         data() {
@@ -56,10 +56,12 @@
                         this.$router.push('/home')
                     }, error => {
                         this.$data.alertMessage = (error.response.data.message.length < 150) ? error.response.data.message : 'Request error. Please, report this error website owners';
-                        console.log(error)
+                        // console.log(error)
+                        this.$data.error = error;
                     })
                     .catch(e => {
-                        console.log(e);
+                        // console.log(e);
+                        this.$data.error = e;
                         this.showAlert();
                     })
             },

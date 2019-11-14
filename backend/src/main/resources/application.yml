@@ -5,9 +5,15 @@ spring:
         password: postgres
         driver-class-name: org.postgresql.Driver
     liquibase:
-        drop-first: true
+        drop-first: false
 
 assm:
     app:
         jwtSecret: jwtAssmSecretKey
         jwtExpiration: 86400
+
+server:
+    tomcat:
+        remote-ip-header: x-forwarded-for
+        protocol-header: x-forwarded-proto
+
