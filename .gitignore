@@ -35,4 +35,4 @@ build/
 
 ### Backend ###
 /backend/src/main/resources/public
-/backend/src/main/resources/templates
+/backend/src/main/resources/public/static

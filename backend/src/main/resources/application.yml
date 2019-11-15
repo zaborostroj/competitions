@@ -6,6 +6,7 @@ spring:
         driver-class-name: org.postgresql.Driver
     liquibase:
         drop-first: false
+    jpa.properties.hibernate.temp.use_jdbc_metadata_defaults: false # disable annoying exception on Spring startup
 
 assm:
     app:
