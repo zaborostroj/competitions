@@ -18,7 +18,7 @@
                     </b-alert>
                 </div>
                 <div>
-                    <b-form-input type="text" placeholder="Username" v-model="username" />
+                    <b-form-input type="text" placeholder="Login" v-model="userLogin" />
                     <div class="mt-2"></div>
 
                     <b-form-input type="password" placeholder="Password" v-model="password" />
@@ -41,7 +41,7 @@
         name: 'SignIn',
         data() {
             return {
-                username: '',
+                userLogin: '',
                 password: '',
                 dismissSecs: 5,
                 dismissCountDown: 0,
@@ -50,18 +50,16 @@
         },
         methods: {
             login() {
-                AXIOS.post(`/auth/signin`, {'username': this.$data.username, 'password': this.$data.password})
+                AXIOS.post(`/auth/signin`, {'login': this.$data.userLogin, 'password': this.$data.password})
                     .then(response => {
-                        this.$store.dispatch('login', {'token': response.data.accessToken, 'roles': response.data.authorities, 'username': response.data.username});
+                        this.$store.dispatch('login', {'token': response.data.accessToken, 'roles': response.data.authorities, 'login': response.data.login});
                         this.$router.push('/home')
                     }, error => {
                         this.$data.alertMessage = (error.response.data.message.length < 150) ? error.response.data.message : 'Request error. Please, report this error website owners';
-                        // console.log(error)
                         this.$data.error = error;
                     })
-                    .catch(e => {
-                        // console.log(e);
-                        this.$data.error = e;
+                    .catch(exception => {
+                        this.$data.exception = exception;
                         this.showAlert();
                     })
             },

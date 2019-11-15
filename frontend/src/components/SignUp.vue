@@ -27,7 +27,7 @@
                     </b-alert>
                 </div>
                 <div>
-                    <b-form-input type="text" placeholder="Username" v-model="username" />
+                    <b-form-input type="text" placeholder="Login" v-model="login" />
                     <div class="mt-2"></div>
 
                     <b-form-input type="text" placeholder="First Name" v-model="firstname" />
@@ -70,7 +70,7 @@
         components: { VueRecaptcha },
         data () {
             return {
-                username: '',
+                login: '',
                 firstname: '',
                 lastname: '',
                 email: '',
@@ -85,8 +85,8 @@
         },
         methods: {
             register: function () {
-                if (this.$data.username === '' || this.$data.username == null) {
-                    this.$data.alertMessage = 'Please, fill "Username" field';
+                if (this.$data.login === '' || this.$data.login == null) {
+                    this.$data.alertMessage = 'Please, fill "Login" field';
                     this.showAlert();
                 } else if (this.$data.firstname === '' || this.$data.firstname == null) {
                     this.$data.alertMessage = 'Please, fill "First name" field';
@@ -111,7 +111,7 @@
                     this.showAlert();
                 } else {
                     var newUser = {
-                        'username': this.$data.username,
+                        'login': this.$data.login,
                         'firstName': this.$data.firstname,
                         'lastName': this.$data.lastname,
                         'email': this.$data.email,
@@ -119,16 +119,14 @@
                     };
                     AXIOS.post('/auth/signup', newUser)
                         .then(response => {
-                            // console.log(response);
                             this.$data.response = response;
                             this.successAlert();
                         }, error => {
                             this.$data.alertMessage = (error.response.data.message.length < 150) ? error.response.data.message : 'Request error. Please, report this error website owners'
                             this.showAlert();
                         })
-                        .catch(error => {
-                            // console.log(error);
-                            this.$data.error = error;
+                        .catch(exception => {
+                            this.$data.exception = exception;
                             this.$data.alertMessage = 'Request error. Please, report this error website owners';
                             this.showAlert();
                         });
@@ -141,7 +139,7 @@
                 this.dismissCountDown = this.dismissSecs
             },
             successAlert() {
-                this.username = '';
+                this.login = '';
                 this.firstname = '';
                 this.lastname = '';
                 this.email = '';

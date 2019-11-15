@@ -6,4 +6,3 @@ databaseChangeLog:
 
   #base
   - include: { relativeToChangelogFile: true, file: v_1_0_0/001_initial_schema.sql }
-#  - include: { relativeToChangelogFile: true, file: v_1_0_0/002_initial_data.sql }
