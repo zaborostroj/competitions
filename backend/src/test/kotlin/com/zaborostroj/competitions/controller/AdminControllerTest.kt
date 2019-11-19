@@ -1,7 +1,8 @@
 package com.zaborostroj.competitions.controller
 
+import com.zaborostroj.competitions.dto.toDto
 import com.zaborostroj.competitions.entities.User
-import com.zaborostroj.competitions.repositories.UsersRepository
+import com.zaborostroj.competitions.services.UsersService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -18,7 +19,7 @@ class AdminControllerTest {
     lateinit var adminController: AdminController
 
     @Mock
-    lateinit var usersRepository: UsersRepository
+    lateinit var usersService: UsersService
 
     @Test
     fun getAllUsersTest() {
@@ -39,11 +40,11 @@ class AdminControllerTest {
             password = "222",
             enabled = true
         )
-        val expectedUsers = listOf(user1, user2)
-        `when`(usersRepository.findAll()).thenReturn(expectedUsers)
+        val expectedUsers = listOf(user1.toDto(), user2.toDto())
+        `when`(usersService.findAll()).thenReturn(expectedUsers)
 
         // when
-        val users = adminController.getAllUsers()
+        val users = adminController.findAll()
 
         // then
         assertThat(users.size == 2)

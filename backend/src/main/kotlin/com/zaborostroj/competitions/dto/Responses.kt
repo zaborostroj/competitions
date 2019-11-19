@@ -2,10 +2,19 @@ package com.zaborostroj.competitions.dto
 
 import org.springframework.security.core.GrantedAuthority
 
-class JwtResponse(
+data class JwtResponse(
     var accessToken: String?,
     var username: String?,
     val authorities: Collection<GrantedAuthority>
 )
 
-class ResponseMessage(var message: String?)
+data class ResponseMessage(var message: String?)
+
+data class UserResponse(
+    var login: String,
+    var firstName: String?,
+    var lastName: String?,
+    var email: String,
+    var enabled: Boolean = false,
+    var roles: List<String>?
+)

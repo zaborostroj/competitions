@@ -1,7 +1,7 @@
 package com.zaborostroj.competitions.controller
 
-import com.zaborostroj.competitions.entities.User
-import com.zaborostroj.competitions.repositories.UsersRepository
+import com.zaborostroj.competitions.dto.UserResponse
+import com.zaborostroj.competitions.services.UsersService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController
 class AdminController {
 
     @Autowired
-    lateinit var usersRepository: UsersRepository
+    lateinit var usersService: UsersService
 
     @GetMapping(value = ["/users"])
     @PreAuthorize(value = "hasRole('ROLE_ADMIN')")
     @ResponseBody
-    fun getAllUsers(): List<User> {
-        return usersRepository.findAll()
+    fun findAll(): List<UserResponse> {
+        return usersService.findAll()
     }
 }
