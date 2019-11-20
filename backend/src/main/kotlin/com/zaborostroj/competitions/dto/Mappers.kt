@@ -9,5 +9,5 @@ fun User.toDto() = UserResponse(
     lastName = lastName,
     email = email,
     enabled = enabled,
-    roles = roles?.map(Role::name)
+    roles = roles.map(Role::name)
 )

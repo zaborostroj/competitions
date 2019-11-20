@@ -18,11 +18,6 @@ const val NOT_INITIALIZED: Long = 0
 @Table(name = "users")
 data class User(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UserSequence")
-    @SequenceGenerator(name = "UserSequence", sequenceName = "users_id_seq")
-    val id: Long = NOT_INITIALIZED,
-
     @Column(name = "login")
     val login: String,
 
@@ -47,8 +42,13 @@ data class User(
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
     )
-    var roles: Collection<Role>? = null
-)
+    var roles: Collection<Role>
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UserSequence")
+    @SequenceGenerator(name = "UserSequence", sequenceName = "users_id_seq")
+    val id: Long = NOT_INITIALIZED
+}
 
 @Entity
 @Table(name = "roles")

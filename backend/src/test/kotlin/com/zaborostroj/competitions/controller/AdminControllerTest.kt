@@ -1,6 +1,7 @@
 package com.zaborostroj.competitions.controller
 
 import com.zaborostroj.competitions.dto.toDto
+import com.zaborostroj.competitions.entities.Role
 import com.zaborostroj.competitions.entities.User
 import com.zaborostroj.competitions.services.UsersService
 import org.assertj.core.api.Assertions.assertThat
@@ -30,7 +31,8 @@ class AdminControllerTest {
             lastName = "lastname1",
             email = "email1",
             password = "111",
-            enabled = true
+            enabled = true,
+            roles = listOf(Role(1, "ROLE_USER"))
         )
         val user2 = User(
             login = "user2",
@@ -38,7 +40,8 @@ class AdminControllerTest {
             lastName = "lastname2",
             email = "email2",
             password = "222",
-            enabled = true
+            enabled = true,
+            roles = listOf(Role(1, "ROLE_USER"))
         )
         val expectedUsers = listOf(user1.toDto(), user2.toDto())
         `when`(usersService.findAll()).thenReturn(expectedUsers)

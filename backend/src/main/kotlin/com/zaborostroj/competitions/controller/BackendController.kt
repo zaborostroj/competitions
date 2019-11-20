@@ -1,7 +1,7 @@
 package com.zaborostroj.competitions.controller
 
-import com.zaborostroj.competitions.entities.User
-import com.zaborostroj.competitions.repositories.UsersRepository
+import com.zaborostroj.competitions.dto.UserResponse
+import com.zaborostroj.competitions.services.UsersService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
@@ -17,20 +17,20 @@ import org.springframework.web.bind.annotation.RestController
 class BackendController {
 
     @Autowired
-    lateinit var usersRepository: UsersRepository
+    lateinit var usersService: UsersService
 
     @GetMapping(value = ["/usercontent"])
     @PreAuthorize(value = "hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @ResponseBody
     fun getUserContent(authentication: Authentication): String {
-        val user: User = usersRepository.getByLogin(authentication.name).get()
-        return "Hello, ${user.firstName} ${user.lastName}!"
+        val userResponse: UserResponse = usersService.findByLogin(authentication.name)
+        return "Hello, ${userResponse.firstName} ${userResponse.lastName}!"
     }
 
     @GetMapping(value = ["/admincontent"])
     @PreAuthorize(value = "hasRole('ROLE_ADMIN')")
     @ResponseBody
-    fun getAdminContent(authentication: Authentication): List<User> {
-        return usersRepository.findAll()
+    fun getAdminContent(authentication: Authentication): List<UserResponse> {
+        return usersService.findAll()
     }
 }
