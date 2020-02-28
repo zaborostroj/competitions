@@ -1,7 +1,6 @@
 package com.zaborostroj.competitions.dto
 
-import com.zaborostroj.competitions.services.UserDetailsServiceImpl
-import org.slf4j.LoggerFactory
+import com.zaborostroj.competitions.services.UsersService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -19,7 +18,7 @@ class JwtAuthTokenFilter : OncePerRequestFilter() {
     private val tokenProvider: JwtProvider? = null
 
     @Autowired
-    private val userDetailsService: UserDetailsServiceImpl? = null
+    private val usersService: UsersService? = null
 
     @Throws(ServletException::class, IOException::class)
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
@@ -29,12 +28,12 @@ class JwtAuthTokenFilter : OncePerRequestFilter() {
             if (jwt != null && tokenProvider!!.validateJwtToken(jwt)) {
                 val username = tokenProvider.getUserNameFromJwtToken(jwt)
 
-                val userDetails = userDetailsService!!.loadUserByUsername(username)
+                val userDetails = usersService!!.loadUserByUsername(username)
                 val authentication = UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities())
-                authentication.setDetails(WebAuthenticationDetailsSource().buildDetails(request))
+                    userDetails, null, userDetails.authorities)
+                authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
 
-                SecurityContextHolder.getContext().setAuthentication(authentication)
+                SecurityContextHolder.getContext().authentication = authentication
             }
         } catch (e: Exception) {
             logger.error("Can NOT set user authentication -> Message: {}", e)
@@ -49,9 +48,5 @@ class JwtAuthTokenFilter : OncePerRequestFilter() {
         return if (authHeader != null && authHeader.startsWith("Bearer ")) {
             authHeader.replace("Bearer ", "")
         } else null
-    }
-
-    companion object {
-        private val logger = LoggerFactory.getLogger(JwtAuthTokenFilter::class.java)
     }
 }

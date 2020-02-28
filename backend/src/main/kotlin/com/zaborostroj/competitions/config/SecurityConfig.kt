@@ -2,7 +2,7 @@ package com.zaborostroj.competitions.config
 
 import com.zaborostroj.competitions.dto.JwtAuthEntryPoint
 import com.zaborostroj.competitions.dto.JwtAuthTokenFilter
-import com.zaborostroj.competitions.services.UserDetailsServiceImpl
+import com.zaborostroj.competitions.services.UsersService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 class SecurityConfig : WebSecurityConfigurerAdapter () {
 
     @Autowired
-    internal var userDetailsService: UserDetailsServiceImpl? = null
+    internal var usersService: UsersService? = null
 
     @Autowired
     private val unauthorizedHandler: JwtAuthEntryPoint? = null
@@ -37,17 +37,17 @@ class SecurityConfig : WebSecurityConfigurerAdapter () {
         return JwtAuthTokenFilter()
     }
 
-    @Throws(Exception::class)
-    override fun configure(auth: AuthenticationManagerBuilder) {
-        auth
-            .userDetailsService(userDetailsService)
-            .passwordEncoder(bCryptPasswordEncoder())
-    }
-
     @Bean
     @Throws(Exception::class)
     override fun authenticationManagerBean(): AuthenticationManager {
         return super.authenticationManagerBean()
+    }
+
+    @Throws(Exception::class)
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth
+            .userDetailsService(usersService)
+            .passwordEncoder(bCryptPasswordEncoder())
     }
 
     @Throws(Exception::class)
