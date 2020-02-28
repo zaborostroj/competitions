@@ -5,9 +5,17 @@ spring:
         password: postgres
         driver-class-name: org.postgresql.Driver
     liquibase:
-        drop-first: true
+        drop-first: false
+    jpa.properties.hibernate.temp.use_jdbc_metadata_defaults: false # disable annoying exception on Spring startup
 
 assm:
     app:
         jwtSecret: jwtAssmSecretKey
         jwtExpiration: 86400
+
+server:
+    tomcat:
+        remote-ip-header: x-forwarded-for
+        protocol-header: x-forwarded-proto
+
+#logging.level.org.springframework.web: DEBUG

@@ -6,10 +6,10 @@ import java.io.Serializable
 class LoginUser : Serializable {
 
     @JsonProperty("login")
-    var login: String? = null
+    var login: String = ""
 
     @JsonProperty("password")
-    var password: String? = null
+    var password: String = ""
 
     constructor()
 
@@ -29,7 +29,7 @@ class LoginUser : Serializable {
 class NewUser : Serializable {
 
     @JsonProperty("login")
-    var login: String? = null
+    var login: String = ""
 
     @JsonProperty("firstName")
     var firstName: String? = null
@@ -38,10 +38,10 @@ class NewUser : Serializable {
     var lastName: String? = null
 
     @JsonProperty("email")
-    var email: String? = null
+    var email: String = ""
 
     @JsonProperty("password")
-    var password: String? = null
+    var password: String = ""
 
     constructor()
 

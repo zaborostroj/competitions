@@ -1,5 +1,4 @@
 -- Пользователи
-create sequence public.users_id_seq;
 create table public.users (
     id              serial          not null constraint users_pk primary key,
     login           varchar(256)    not null,
@@ -11,7 +10,6 @@ create table public.users (
 );
 
 -- Роли пользователей
-create sequence public.roles_id_seq;
 create table public.roles (
     id      serial      not null constraint roles_pk primary key,
     name    varchar(256)
