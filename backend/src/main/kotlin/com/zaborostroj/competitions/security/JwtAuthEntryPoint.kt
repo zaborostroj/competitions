@@ -1,4 +1,4 @@
-package com.zaborostroj.competitions.dto
+package com.zaborostroj.competitions.security
 
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.AuthenticationException

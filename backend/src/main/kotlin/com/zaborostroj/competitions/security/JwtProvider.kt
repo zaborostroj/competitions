@@ -1,4 +1,4 @@
-package com.zaborostroj.competitions.dto
+package com.zaborostroj.competitions.security
 
 import com.zaborostroj.competitions.repositories.UsersRepository
 import io.jsonwebtoken.ExpiredJwtException

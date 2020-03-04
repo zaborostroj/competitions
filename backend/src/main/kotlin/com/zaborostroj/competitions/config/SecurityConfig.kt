@@ -1,7 +1,7 @@
 package com.zaborostroj.competitions.config
 
-import com.zaborostroj.competitions.dto.JwtAuthEntryPoint
-import com.zaborostroj.competitions.dto.JwtAuthTokenFilter
+import com.zaborostroj.competitions.security.JwtAuthEntryPoint
+import com.zaborostroj.competitions.security.JwtAuthTokenFilter
 import com.zaborostroj.competitions.services.UsersService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean

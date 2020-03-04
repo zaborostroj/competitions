@@ -1,6 +1,6 @@
 package com.zaborostroj.competitions.services
 
-import com.zaborostroj.competitions.dto.JwtProvider
+import com.zaborostroj.competitions.security.JwtProvider
 import com.zaborostroj.competitions.dto.JwtResponse
 import com.zaborostroj.competitions.dto.LoginUser
 import com.zaborostroj.competitions.dto.NewUser
